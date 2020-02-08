@@ -1,59 +1,127 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Listado de libros</title>
-  <meta name="description" content="Listado de libros de Biblioteca Universidad Isabel I">
-</head>
-<body>
-  <table>
+<table id="book-table">
     <tbody>
-      <tr>
-        <th>Título</th>
-        <th>Autores</th>
-        <th>Editorial</th>
-        <th>ISBN</th>
-        <th>Ejemplares disponibles</th>
-      </tr>
-      <tr>
-        <td><a href="libros/ficha-tecnica-libro-sidi.html">SIDI</a></td>
-        <td>ARTURO PEREZ-REVERTE</td>
-        <td>ALFAGUARA</td>
-        <td>9788420435473</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td><a href="libros/ficha-tecnica-libro-reina.roja.html">REINA ROJA</a></td>
-        <td>JUAN GOMEZ-JURADO</td>
-        <td>S.A. EDICIONES B</td>
-        <td>9788466664417</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td><a href="libros/ficha-tecnica-libro-la.cara.norte.del.corazon.html">LA CARA NORTE DEL CORAZON</a></td>
-        <td>DOLORES REDONDO</td>
-        <td>DESTINO</td>
-        <td>9788423356355</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td><a href="libros/ficha-tecnica-libro-terra.alta.html">TERRA ALTA</a></td>
-        <td>JAVIER CERCAS</td>
-        <td>PLANETA</td>
-        <td>9788408217848</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td><a href="libros/ficha-tecnica-libro-loba.negra.html">LOBA NEGRA</a></td>
-        <td>JUAN GOMEZ-JURADO</td>
-        <td>S.A. EDICIONES B</td>
-        <td>9788466666497</td>
-        <td>10</td>
-      </tr>
+        <tr>
+            <th>Título</th>
+            <th>Autores</th>
+            <th>Editorial</th>
+            <th>ISBN</th>
+            <th>Ejemplares disponibles</th>
+        </tr>
+        <tr>
+            <td><a id="sidi" href="">SIDI</a></td>
+            <td>ARTURO PEREZ-REVERTE</td>
+            <td>ALFAGUARA</td>
+            <td>9788420435473</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td><a id="reinaroja" href="">REINA ROJA</a></td>
+            <td>JUAN GOMEZ-JURADO</td>
+            <td>S.A. EDICIONES B</td>
+            <td>9788466664417</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td><a id="caranortecorazon" href="">LA CARA NORTE DEL CORAZON</a></td>
+            <td>DOLORES REDONDO</td>
+            <td>DESTINO</td>
+            <td>9788423356355</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td><a id="terraalta" href="">TERRA ALTA</a></td>
+            <td>JAVIER CERCAS</td>
+            <td>PLANETA</td>
+            <td>9788408217848</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td><a id="lobanegra" href="">LOBA NEGRA</a></td>
+            <td>JUAN GOMEZ-JURADO</td>
+            <td>S.A. EDICIONES B</td>
+            <td>9788466666497</td>
+            <td>10</td>
+        </tr>
     </tbody>
-  </table>
-  <br/>
-  <br/>
-  <footer><a href="index.html">Volver</a></footer>
-</body>
-</html>
+</table>
+<!-- Modal Trigger -->
+<a class="btn-floating btn-large waves-effect waves-light modal-trigger" href="#demo-modal">
+    <i class="material-icons">add</i>
+</a>
+
+<!-- Modal Structure -->
+<div id="demo-modal" class="modal">
+    <div class="modal-content">
+        <form class="col s12" id="add-book">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Título" id="title" type="text" class="validate" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Autor" id="author" type="text" class="validate" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Editorial" id="editorial" type="text" class="validate" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="ISBN" id="isbn" type="text" class="validate" required>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Cantidad disponible" id="available" type="text" class="validate" required>
+                </div>
+            </div>
+            <div class="row">
+                <a class="modal-action modal-close waves-effect waves btn">Cancelar</a>
+                <button class="waves-effect waves btn" type="submit" id="submit" name="action">Aceptar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.modal').modal();
+        $("form").submit(function(event) {
+            event.preventDefault();
+            var title = $("#title").val();
+            var author = $("#author").val();
+            var editorial = $("#editorial").val();
+            var isbn = $("#isbn").val();
+            var available = $("#available").val();
+            var markup = "<tr><td><a id=\"libro-" + isbn + "\">" + title + "</a></td><td>" + author + "</td> <td>" + editorial + "</td> <td>" + isbn + "</td><td>" + available + "</td></tr>";
+            $("table tbody").append(markup);
+            $('#demo-modal').modal('close');
+            $(this).find("input[type=text]").val("");
+        });
+
+
+        $("#sidi").click(function(event) {
+            event.preventDefault();
+            $("#main-content").load("libros/ficha-tecnica-libro-sidi.html");
+        });
+        $("#reinaroja").click(function(event) {
+            event.preventDefault();
+            $("#main-content").load("libros/ficha-tecnica-libro-reina.roja.html");
+        });
+        $("#caranortecorazon").click(function(event) {
+            event.preventDefault();
+            $("#main-content").load("libros/ficha-tecnica-libro-la.cara.norte.del.corazon.html");
+        });
+        $("#terraalta").click(function(event) {
+            event.preventDefault();
+            $("#main-content").load("libros/ficha-tecnica-libro-terra.alta.html");
+        });
+        $("#lobanegra").click(function(event) {
+            event.preventDefault();
+            $("#main-content").load("libros/ficha-tecnica-libro-loba.negra.html");
+        });
+
+
+    })
+
+</script>
